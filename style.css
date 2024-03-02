@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Roboto Mono", monospace, Arial, Helvetica, sans-serif;
+  height: 100vh;
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  padding: 20px;
+  text-shadow: 1px 1px 1px #008b8b71;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  background-color: rgba(228, 173, 101, 0.502);
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.container h3,
+.container p {
+  color: #3b3b3b;
+}
+
+.container p {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.game-board {
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 350px;
+  width: 350px;
+}
+
+.game-board .cell {
+  font-weight: bold;
+  font-size: 40px;
+  border: gray solid 2px;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 20px;
+  color: darkblue;
+}
+
+.game-board .cell:hover {
+  background-color: #008b8b71;
+  transition: 0.2s;
+}
