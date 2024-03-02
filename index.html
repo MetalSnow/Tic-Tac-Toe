@@ -10,9 +10,33 @@
   <body>
     <h1>Tic Tac Toe</h1>
     <div class="container">
-      <h3 class="turn">Player's Turn</h3>
+      <h3 class="turn">--Player's Turn--</h3>
       <div class="game-board"></div>
       <p class="stats">X or O</p>
+    </div>
+    <div class="start-game">
+      <h1>Tic Tac Toe</h1>
+      <div class="initial">
+        <div class="player-info">
+          <label for="player-one">Player One: </label>
+          <input
+            type="text"
+            id="player-one"
+            name="name"
+            placeholder="Enter Name"
+          />
+        </div>
+        <div class="player-info">
+          <label for="player-two">Player Two: </label>
+          <input
+            type="text"
+            id="player-two"
+            name="name"
+            placeholder="Enter Name"
+          />
+        </div>
+        <button id="start">Start Game</button>
+      </div>
     </div>
   </body>
 </html>
