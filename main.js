@@ -49,8 +49,6 @@ const GameController = function () {
     activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
   };
 
-  const getActivePlayer = () => activePlayer;
-
   const addSignToCell = function (cell) {
     if (gameBoard[cell] !== "") {
       return;
@@ -73,31 +71,60 @@ const GameController = function () {
     [2, 4, 6], // Diagonal
   ];
 
-  const checkWinner = function () {
-    console.log(gameBoard);
+  const checkWinner = function (para, dialog) {
+    // Check For A Tie
+    if (!gameBoard.includes("")) {
+      switchTurn();
+      para.textContent = `Its A Tie!`;
+      dialog.showModal();
+    }
+    // Check for winner
     for (comb of winningCondition) {
       if (
         gameBoard[comb[0]] === "X" &&
         gameBoard[comb[1]] === "X" &&
         gameBoard[comb[2]] === "X"
       ) {
-        console.log(`${activePlayer.getName()} 1 has won!`);
+        switchTurn();
+        para.textContent = `${activePlayer.getName()}(${activePlayer.getChoice()}) Has Won!`;
+        dialog.showModal();
       } else if (
         gameBoard[comb[0]] === "O" &&
         gameBoard[comb[1]] === "O" &&
         gameBoard[comb[2]] === "O"
       ) {
-        console.log(`${activePlayer.getName()} 2 has won!`);
-      } else if (!gameBoard.includes("")) {
-        return console.log("It's A Tie");
+        switchTurn();
+        para.textContent = `${activePlayer.getName()}(${activePlayer.getChoice()}) Has Won!`;
+        dialog.showModal();
       }
     }
   };
 
-  return { getActivePlayer, addSignToCell, checkWinner, startGame };
+  // Reset board functions
+  const rematch = function (cell, dialog) {
+    for (let i = 0; i < gameBoard.length; i++) {
+      gameBoard.splice(i, 1, "");
+    }
+    cell.textContent = "";
+    startGame();
+    dialog.close();
+  };
+
+  const restart = function (cell, dialog) {
+    for (let i = 0; i < gameBoard.length; i++) {
+      gameBoard.splice(i, 1, "");
+    }
+
+    cell.textContent = "";
+    startDiv.classList.remove("active");
+    inputOne.value = "";
+    inputTwo.value = "";
+    dialog.close();
+  };
+  return { addSignToCell, checkWinner, startGame, rematch, restart };
 };
 
-const DisplayController = function () {
+const DisplayController = (function () {
   const gameBoard = GameBoard.getBoard();
   const game = GameController();
 
@@ -105,6 +132,10 @@ const DisplayController = function () {
     //Get DOM Elements
     const startBtn = document.querySelector("#start");
     const boardDiv = document.querySelector(".game-board");
+    const dialog = document.querySelector("dialog");
+    const para = document.querySelector(".p-dialog");
+    const rematchBtn = document.querySelector("#rematch");
+    const restartBtn = document.querySelector("#restart");
 
     //Initialize game
     startBtn.addEventListener("click", game.startGame);
@@ -119,13 +150,19 @@ const DisplayController = function () {
       cell.addEventListener("click", () => {
         game.addSignToCell(i);
         cell.textContent = gameBoard[i];
-        console.log(gameBoard);
+        game.checkWinner(para, dialog);
       });
       boardDiv.appendChild(cell);
+
+      //reset board
+      rematchBtn.addEventListener("click", () => {
+        game.rematch(cell, dialog);
+      });
+      restartBtn.addEventListener("click", () => {
+        game.restart(cell, dialog);
+      });
     }
   };
 
   renderBoard();
-};
-
-DisplayController();
+})();
