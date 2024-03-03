@@ -17,23 +17,33 @@ const GameController = function () {
   const gameBoard = GameBoard.getBoard();
 
   const startDiv = document.querySelector(".start-game");
-  const inputOne = document.querySelector("#player-one").value;
-  const inputTwo = document.querySelector("#player-two").value;
+  const inputOne = document.querySelector("#player-one");
+  const inputTwo = document.querySelector("#player-two");
   const turn = document.querySelector(".turn");
   const stats = document.querySelector(".stats");
 
+  //Create Players
+  let playerOne;
+  let playerTwo;
+  let activePlayer;
+
   //initialize Game
-  function startGame() {
-    //Create Players
-    const playerOne = Player(inputOne, "X");
-    const playerTwo = Player(inputTwo, "O");
+  const startGame = () => {
+    playerOne = Player(inputOne.value.trim(), "X");
+    playerTwo = Player(inputTwo.value.trim(), "O");
+
+    // Check if inputs are not empty
+    if (inputOne.value.trim() === "" || inputTwo.value.trim() === "") {
+      alert("Please enter player names.");
+      return;
+    }
 
     turn.textContent = `--${playerOne.getName()}'s Turn--`;
     stats.textContent = `${playerOne.getName()}(${playerOne.getChoice()}) VS ${playerTwo.getName()}(${playerTwo.getChoice()})`;
     startDiv.classList.add("active");
-  }
 
-  let activePlayer = playerOne;
+    activePlayer = playerOne;
+  };
 
   const switchTurn = () => {
     activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
@@ -46,8 +56,8 @@ const GameController = function () {
       return;
     } else {
       gameBoard.splice(cell, 1, activePlayer.getChoice());
-      turn.textContent = `--${playerTwo.getName()}'s Turn--`;
       switchTurn();
+      turn.textContent = `--${activePlayer.getName()}'s Turn--`;
     }
   };
 
