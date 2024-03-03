@@ -77,12 +77,12 @@ h1 {
   align-items: center;
   gap: 20px;
   opacity: 1;
-  transition: opacity 0.3s;
 }
 
 .start-game.active {
   opacity: 0;
   visibility: hidden;
+  transition: 1s;
 }
 
 .start-game .initial {
@@ -118,4 +118,39 @@ h1 {
 
 .initial button:hover {
   background-color: #ffc87f;
+}
+
+/* dialog */
+dialog {
+  margin: auto;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid lightsalmon;
+  background-color: darkslategray;
+  color: white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.content .p-dialog {
+  font-size: 22px;
+  text-shadow: 1px 1px 1px lightsalmon;
+  font-style: italic;
+}
+.content button {
+  width: 100px;
+  padding: 5px 15px;
+  font-weight: bold;
+  align-self: center;
+  border-radius: 10px;
+  border-color: lightsalmon;
+  cursor: pointer;
+}
+
+dialog::backdrop {
+  background-color: black;
+  opacity: 0.6;
 }
